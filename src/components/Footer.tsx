@@ -17,7 +17,7 @@ export default function Footer() {
               priority
             />
           </Link>
-          <p className="mt-3">офіційний імпортер шин CEAT для сільськогосподарської техніки в Україні.</p>
+          <p className="mt-3">офіційний імпортер шин CEAT, Trelleborg, Mitas для сільськогосподарської техніки в Україні.</p>
         </div>
 
         <div className="text-sm">
@@ -58,7 +58,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="bg-[#008E4E] py-4 text-center text-xs text-white/80">
-        © {new Date().getFullYear()} ТОВ &ldquo;Агро-Солар&rdquo; офіційний імпортер шин CEAT в Україні. Всі права захищені.
+        © {new Date().getFullYear()} ТОВ &ldquo;Агро-Солар&rdquo; офіційний імпортер шин CEAT, Trelleborg, Mitas в Україні. Всі права захищені.
       </div>
     </footer>
   );
