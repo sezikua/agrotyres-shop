@@ -1,4 +1,5 @@
 import { headers } from 'next/headers';
+import { availabilityInfo, detectBrand, importerHeadline, sanitizeDescription } from '@/lib/productMeta';
 
 async function getBaseUrl(): Promise<string> {
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -24,6 +25,7 @@ export default async function Head({ params }: { params: Promise<{ slug: string 
     warehouse: string;
     regular_price: string;
     discount_price: string | null;
+    brand?: string | null;
   };
   let product: ProductForHead | null = null;
   try {
@@ -34,26 +36,50 @@ export default async function Head({ params }: { params: Promise<{ slug: string 
     }
   } catch {}
 
+  const brand = detectBrand(product?.brand, product?.product_name);
+  const headline = importerHeadline(brand);
+  const availability = availabilityInfo(product?.warehouse);
+  const details = [
+    product?.model ? `Модель ${product.model}` : null,
+    product?.size ? `Розмір ${product.size}` : null,
+  ].filter(Boolean).join(', ');
+
   const jsonLd = product ? {
     '@context': 'https://schema.org/',
     '@type': 'Product',
     name: product.product_name,
-    description: product.description || `${product.product_name} (${product.model}, ${product.size})`,
+    description: sanitizeDescription(product.description) || `${product.product_name}${details ? ` (${details})` : ''}`,
     image: product.product_image ? `${baseUrl}/api/assets/${product.product_image}` : `${baseUrl}/placeholder-image.svg`,
     sku: product.sku,
-    brand: { '@type': 'Brand', name: 'CEAT' },
+    brand: { '@type': 'Brand', name: brand },
     offers: {
       '@type': 'Offer',
-      availability: product.warehouse?.toLowerCase() === 'in stock' ? 'https://schema.org/InStock' : (product.warehouse?.toLowerCase() === 'on order' ? 'https://schema.org/PreOrder' : 'https://schema.org/OutOfStock'),
+      availability: product.warehouse?.toLowerCase() === 'in stock'
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/PreOrder',
       priceCurrency: 'UAH',
       price: product.discount_price || product.regular_price,
       url: `${baseUrl}/products/${encodeURIComponent(slug)}`,
       itemCondition: 'https://schema.org/NewCondition',
       seller: {
         '@type': 'Organization',
-        name: 'CEAT — офіційний імпортер в Україні'
+        name: headline
       }
     },
+    additionalProperty: [
+      ...(details
+        ? [{
+            '@type': 'PropertyValue',
+            name: 'Параметри',
+            value: details,
+          }]
+        : []),
+      {
+        '@type': 'PropertyValue',
+        name: 'Наявність',
+        value: availability.short,
+      },
+    ],
   } : null;
 
   return (
@@ -94,5 +120,6 @@ export default async function Head({ params }: { params: Promise<{ slug: string 
     </>
   );
 }
+
 
 

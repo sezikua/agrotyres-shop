@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
+import { availabilityInfo, detectBrand, importerHeadline, sanitizeDescription } from '@/lib/productMeta';
 
 type ProductApiResponse = {
   data: {
@@ -16,6 +17,7 @@ type ProductApiResponse = {
     discount_price: string | null;
     warehouse: string;
     slug?: string;
+    brand?: string | null;
   } | null;
 };
 
@@ -43,19 +45,31 @@ export async function generateMetadata(
     }
   } catch {}
 
+  const brand = detectBrand(product?.brand, product?.product_name);
+  const headline = importerHeadline(brand);
+  const availability = availabilityInfo(product?.warehouse);
+  const details = [
+    product?.model ? `Модель ${product.model}` : null,
+    product?.size ? `Розмір ${product.size}` : null,
+  ].filter(Boolean).join(', ');
+
   const title = product
-    ? `${product.product_name} — CEAT — офіційний імпортер в Україні`
-    : 'Товар — CEAT — офіційний імпортер в Україні';
+    ? `${headline} | ${product.product_name}`
+    : `${headline} | Преміальні шини`;
+
+  const fallbackDescription = product
+    ? `Купити ${product.product_name}${details ? ` (${details})` : ''} ${availability.phrase}. Бренд ${brand}.`
+    : `${headline}. Каталог сільськогосподарських шин із гарантією виробника.`;
 
   const description = product?.description
-    ? product.description.replace(/<[^>]*>/g, '').slice(0, 200)
-    : product
-      ? `Купити ${product.product_name} (${product.model}, ${product.size}) в наявності у CEAT — офіційний імпортер в Україні.`
-      : 'Магазин шин CEAT — офіційний імпортер в Україні.';
+    ? sanitizeDescription(product.description).slice(0, 220) || fallbackDescription
+    : fallbackDescription;
 
   const keywords = product
-    ? [product.product_name, product.model, product.size, product.Category, product.Segment, 'CEAT', 'шини', 'агро'].filter(Boolean).join(', ')
-    : 'CEAT, шини, агро, тракторні шини';
+    ? [product.product_name, product.model, product.size, product.Category, product.Segment, brand, 'шини', 'Agro-Solar']
+        .filter(Boolean)
+        .join(', ')
+    : `Agro-Solar, ${brand}, сільськогосподарські шини`;
 
   const canonical = `${baseUrl}/products/${encodeURIComponent(slug)}`;
   const ogImage = product?.product_image ? `${baseUrl}/api/assets/${product.product_image}` : `${baseUrl}/placeholder-image.svg`;
@@ -70,8 +84,16 @@ export async function generateMetadata(
       description,
       type: 'website',
       url: canonical,
-      images: [{ url: ogImage, alt: product?.product_name || 'CEAT product' }],
-      siteName: 'CEAT — офіційний імпортер в Україні',
+      images: [
+        {
+          url: ogImage,
+          secureUrl: ogImage,
+          width: 1200,
+          height: 630,
+          alt: product?.product_name || headline,
+        },
+      ],
+      siteName: brand,
       locale: 'uk_UA',
     },
     twitter: {

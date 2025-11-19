@@ -202,10 +202,6 @@ export default function ProductFilters({ onFiltersChange, onLoadingChange, curre
   };
 
   // Видалено інтерфейс "Наявність", тож обробник залишено порожнім на випадок майбутнього повернення
-  const handleWarehouseChange = (_value: string) => {
-    // no-op
-  };
-
   const handleCategoryChange = (value: string) => {
     setSelectedCategory(value);
     // If diameter is selected and not compatible with new category, clear it
