@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { fetchProductsByCategory, Product } from '@/lib/api';
 import { getCategoryDescription } from '@/lib/categoryDescriptions';
+import { mapCategoryToApi } from '@/lib/categoryMap';
 import ProductCard from '@/components/ProductCard';
 import ProductFilters from '@/components/ProductFilters';
 import { Loader2, Package, ArrowLeft, CheckCircle, Star, Truck } from 'lucide-react';
@@ -23,7 +24,8 @@ export default function CategoryPage() {
       try {
         setLoading(true);
         const category = decodeURIComponent(params.category as string);
-        const data = await fetchProductsByCategory(category);
+        const apiCategory = mapCategoryToApi(category);
+        const data = await fetchProductsByCategory(apiCategory);
         setProducts(data.data);
         setFilteredProducts(data.data);
       } catch (err) {
@@ -74,7 +76,8 @@ export default function CategoryPage() {
   }
 
   const categoryName = decodeURIComponent(params.category as string);
-  const categoryDesc = getCategoryDescription(categoryName);
+  const apiCategory = mapCategoryToApi(categoryName);
+  const categoryDesc = getCategoryDescription(categoryName) || getCategoryDescription(apiCategory);
 
   return (
     <div className="min-h-screen bg-background">
@@ -170,7 +173,7 @@ export default function CategoryPage() {
             <ProductFilters 
               onFiltersChange={handleFiltersChange}
               onLoadingChange={handleLoadingChange}
-              currentCategory={categoryName}
+              currentCategory={apiCategory}
             />
           </div>
 

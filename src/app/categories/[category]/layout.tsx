@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { headers } from 'next/headers';
+import { mapCategoryToApi } from '@/lib/categoryMap';
+import { getCategoryDescription } from '@/lib/categoryDescriptions';
 
 type PagedProducts = {
   data: Array<{ id: number; product_name: string; model: string; size: string; product_image: string | null }>;
@@ -21,11 +23,13 @@ export async function generateMetadata(
   const { category } = await params;
   const baseUrl = await getBaseUrl();
   const decoded = decodeURIComponent(category);
+  const apiCategory = mapCategoryToApi(decoded);
+  const categoryDesc = getCategoryDescription(decoded) || getCategoryDescription(apiCategory);
 
   let products: PagedProducts['data'] = [];
   let total = 0;
   try {
-    const res = await fetch(`${baseUrl}/api/products?category=${encodeURIComponent(decoded)}&limit=12`, { next: { revalidate: 300 } });
+    const res = await fetch(`${baseUrl}/api/products?category=${encodeURIComponent(apiCategory)}&limit=12`, { next: { revalidate: 300 } });
     if (res.ok) {
       const json: PagedProducts = await res.json();
       products = json.data || [];
@@ -33,9 +37,10 @@ export async function generateMetadata(
     }
   } catch {}
 
-  const title = `Категорія: ${decoded} — CEAT — офіційний імпортер в Україні`;
-  const description = `Магазин шин CEAT у категорії "${decoded}". Доступно ${total} товарів. CEAT — офіційний імпортер в Україні.`;
-  const keywords = `${decoded}, CEAT, шини, агро`;
+  const displayName = categoryDesc?.title || `Категорія: ${decoded}`;
+  const description = categoryDesc?.description || `Магазин шин у категорії "${decoded}". Доступно ${total} товарів.`;
+  const keywords = categoryDesc?.keywords.join(', ') || `${decoded}, CEAT, шини, агро`;
+  const title = `${displayName} — CEAT — офіційний імпортер в Україні`;
   const canonical = `${baseUrl}/categories/${encodeURIComponent(category)}`;
 
   const firstImage = products[0]?.product_image ? `${baseUrl}/api/assets/${products[0].product_image}` : `${baseUrl}/placeholder-image.svg`;

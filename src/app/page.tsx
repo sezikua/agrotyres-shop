@@ -222,10 +222,10 @@ function CategoryCard({ category, isMobile = false }: { category: CategoryItem; 
 
 function CategoriesGrid() {
   const categories: CategoryItem[] = [
-    { title: "Шини для тракторів", image: "/tractor-caregory.avif", video: "/video-tractor-Reel.mp4", href: "/categories/High%20Power%20Tractor", isSpecial: true },
-    { title: "Шини для комбайнів", image: "/harvest-caregory.avif", video: "/website-video-harvester-reel.mp4", href: "/categories/Harvester", isSpecial: true },
+    { title: "Шини для тракторів", image: "/tractor-caregory.avif", video: "/video-tractor-Reel.mp4", href: "/categories/%D0%A2%D1%80%D0%B0%D0%BA%D1%82%D0%BE%D1%80%D0%B8%20%D0%92%D0%B5%D0%BB%D0%B8%D0%BA%D0%BE%D1%97%20%D0%9F%D0%BE%D1%82%D1%83%D0%B6%D0%BD%D0%BE%D1%81%D1%82%D1%96", isSpecial: true },
+    { title: "Шини для комбайнів", image: "/harvest-caregory.avif", video: "/website-video-harvester-reel.mp4", href: "/categories/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B0%D0%B9%D0%BD%D0%B8", isSpecial: true },
     { title: "Шини для навантажувачів", image: "/loader-caregory.avif", href: "/categories/THL%2FCompact%20Loader" },
-    { title: "Шини для обприскувачів", image: "/splayer-caregory.avif", video: "/website-video-sprayer-reel.mp4", href: "/categories/Sprayer", isSpecial: true },
+    { title: "Шини для обприскувачів", image: "/splayer-caregory.avif", video: "/website-video-sprayer-reel.mp4", href: "/categories/%D0%9E%D0%B1%D0%BF%D1%80%D0%B8%D1%81%D0%BA%D1%83%D0%B2%D0%B0%D1%87%D1%96", isSpecial: true },
     { title: "Шини для причіпної техніки", image: "/trailer-caregory.avif", href: "/categories/Flotation%2FAgri%20Transport" },
   ];
 
