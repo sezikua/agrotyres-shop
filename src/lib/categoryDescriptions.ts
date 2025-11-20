@@ -157,6 +157,7 @@ export const categoryDescriptions: Record<string, CategoryDescription> = {
   "Sprayer": sprayer,
   "Обприскувачі": sprayer,
   "Flotation/Agri Transport": flotation,
+  "Навісне та Причіпне Обладнання": flotation,
 };
 
 export function getCategoryDescription(categoryName: string): CategoryDescription | null {

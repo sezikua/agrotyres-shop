@@ -37,7 +37,7 @@ export default function Footer() {
             <li><Link href="/categories/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B0%D0%B9%D0%BD%D0%B8" className="hover:underline">Шини для комбайнів</Link></li>
             <li><Link href="/categories/THL%2FCompact%20Loader" className="hover:underline">Шини для навантажувачів</Link></li>
             <li><Link href="/categories/%D0%9E%D0%B1%D0%BF%D1%80%D0%B8%D1%81%D0%BA%D1%83%D0%B2%D0%B0%D1%87%D1%96" className="hover:underline">Шини для обприскувачів</Link></li>
-            <li><Link href="/categories/Flotation%2FAgri%20Transport" className="hover:underline">Шини для причіпної техніки</Link></li>
+            <li><Link href="/categories/%D0%9D%D0%B0%D0%B2%D1%96%D1%81%D0%BD%D0%B5%20%D1%82%D0%B0%20%D0%9F%D1%80%D0%B8%D1%87%D1%96%D0%BF%D0%BD%D0%B5%20%D0%9E%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F" className="hover:underline">Шини для причіпної техніки</Link></li>
           </ul>
         </div>
 
