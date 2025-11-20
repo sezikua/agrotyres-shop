@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import ProductCard from "@/components/ProductCard";
+import HomeSizeFilter from "@/components/HomeSizeFilter";
 
 async function getBaseUrl(): Promise<string> {
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -124,6 +125,10 @@ export default async function Home() {
       </div>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        <HomeSizeFilter />
+      </div>
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold mb-6">Категорії</h2>
         <CategoriesGrid />
       </div>
