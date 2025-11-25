@@ -82,8 +82,22 @@ export default async function Head({ params }: { params: Promise<{ slug: string 
     ],
   } : null;
 
+  const productImageUrl = product?.product_image
+    ? `${baseUrl}/api/assets/${product.product_image}`
+    : `${baseUrl}/placeholder-image.svg`;
+
+  const imageAltBase = [product?.size, brand, product?.model].filter(Boolean).join(' ').trim();
+  const imageAlt = imageAltBase
+    ? `Фото шини ${imageAltBase} | ТОВ Агро-Солар`
+    : 'Фото шини ТОВ Агро-Солар';
+
   return (
     <>
+      <meta property="og:image" content={productImageUrl} />
+      <meta property="og:image:secure_url" content={productImageUrl} />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={imageAlt} />
       {jsonLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       )}
