@@ -38,6 +38,7 @@ export async function generateMetadata({ params }: { params: Promise<{ size: str
   const { categoriesList, segmentsDescription } = deriveSizeSeoData(itemsForSeo);
   const categoriesText = categoriesList || "різних типів техніки";
   const segmentsText = segmentsDescription || "різних напрямів аграрної та індустріальної техніки";
+  const ogImage = `${baseUrl}/cstl-logo-eu-as.avif`;
 
   const title = `Купити ${decodedSize} шини для ${categoriesText} | ТОВ Агро-Солар`;
   const description = `Великий вибір ${decodedSize} для ${categoriesText}. Знаходьте ${segmentsText}. Оптимальна ціна та доставка по Україні від ТОВ Агро-Солар.`;
@@ -60,11 +61,20 @@ export async function generateMetadata({ params }: { params: Promise<{ size: str
       url: canonical,
       type: "website",
       siteName: "ТОВ Агро-Солар",
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: `Шини ${decodedSize} — ТОВ Агро-Солар`,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      images: [ogImage],
     },
   };
 }
