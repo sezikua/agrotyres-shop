@@ -5,8 +5,10 @@ import { useParams } from 'next/navigation';
 import { fetchProductsBySize, Product } from '@/lib/api';
 import ProductCard from '@/components/ProductCard';
 import ProductFilters from '@/components/ProductFilters';
-import { Loader2, Package, ArrowLeft } from 'lucide-react';
+import { Loader2, Package } from 'lucide-react';
 import Link from 'next/link';
+import { deriveSizeSeoData } from '@/lib/sizeSeo';
+import { useMemo } from 'react';
 
 export default function SizePage() {
   const params = useParams();
@@ -43,6 +45,13 @@ export default function SizePage() {
     setLoading(loading);
   };
 
+  const rawSizeParam = params.size as string;
+  const sizeName = decodeURIComponent(rawSizeParam);
+  const sizeHref = `/sizes/${encodeURIComponent(sizeName)}`;
+  const sizeSeo = useMemo(() => deriveSizeSeoData(filteredProducts), [filteredProducts]);
+  const categoriesListForDisplay = sizeSeo.categoriesList || "різної техніки";
+  const segmentsDescription = sizeSeo.segmentsDescription || "різних напрямів аграрної та індустріальної техніки";
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -72,25 +81,43 @@ export default function SizePage() {
     );
   }
 
-  const sizeName = decodeURIComponent(params.size as string);
-
   return (
     <div className="min-h-screen bg-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
-          <nav className="mb-4">
-            <Link
-              href="/products"
-              className="inline-flex items-center text-sm text-foreground/70 hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Повернутися до магазину
-            </Link>
+          <nav
+            aria-label="Breadcrumb"
+            className="mb-4 text-sm"
+            itemScope
+            itemType="https://schema.org/BreadcrumbList"
+          >
+            <ol className="flex flex-wrap items-center gap-2 text-foreground/70">
+              <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                <Link itemProp="item" href="/" className="hover:text-foreground transition-colors">
+                  <span itemProp="name">Головна</span>
+                </Link>
+                <meta itemProp="position" content="1" />
+              </li>
+              <span className="text-foreground/40">/</span>
+              <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem">
+                <Link itemProp="item" href="/products" className="hover:text-foreground transition-colors">
+                  <span itemProp="name">Каталог шин</span>
+                </Link>
+                <meta itemProp="position" content="2" />
+              </li>
+              <span className="text-foreground/40">/</span>
+              <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem" className="text-foreground">
+                <Link itemProp="item" href={sizeHref} aria-current="page" className="font-semibold">
+                  <span itemProp="name">Розмір {sizeName}</span>
+                </Link>
+                <meta itemProp="position" content="3" />
+              </li>
+            </ol>
           </nav>
-          
+
           <h1 className="text-3xl font-bold text-foreground mb-2">
-            Розмір: {sizeName}
+            На сторінці представлені шини розміру {sizeName} для {categoriesListForDisplay}
           </h1>
           <p className="text-foreground/70">
             Знайдено {filteredProducts.length} товарів розміру &ldquo;{sizeName}&rdquo;
@@ -126,6 +153,33 @@ export default function SizePage() {
             )}
           </div>
         </div>
+        <section className="mt-12 bg-white dark:bg-black/20 border border-black/5 dark:border-white/10 rounded-2xl p-6 sm:p-8 shadow-sm space-y-4 text-foreground/80">
+          <h2 className="text-2xl font-semibold text-foreground">
+            Повний гайд по шинам {sizeName}
+          </h2>
+          <p>
+            У цьому розділі представлений повний каталог шин {sizeName}, який охоплює {segmentsDescription}. ТОВ
+            &ldquo;Агро-Солар&rdquo; пропонує перевірені рішення для роботи на {categoriesListForDisplay}, гарантуючи, що
+            ви знайдете оптимальні шини в розмірі {sizeName} для конкретної машини. ТОВ &ldquo;Агро-Солар&rdquo; є
+            офіційним імпортером таких відомих брендів шин: CEAT, Trelleborg та Mitas, та надає офіційну гарантію на шини
+            від заводу виробника.
+          </p>
+          <p>
+            Шини {sizeName} у нашому каталозі спеціально створені для надійного зчеплення, стабільного розподілу
+            навантаження та мінімального тиску на ґрунт або для стійкості на твердих поверхнях. Це критично важливо як
+            для продуктивності, так і для безпеки екіпажу. Пропонуємо широкий вибір радіальних і діагональних моделей,
+            що дозволяє підібрати шини розміру {sizeName} для оптимальної, продуктивної роботи техніки у вашому
+            підприємстві. Детальні характеристики допомагають порівняти вантажопідйомність, рівень зчеплення та
+            рекомендований тиск, тож пошук шин в розмірі {sizeName} стає виваженим і професійним.
+          </p>
+          <p>
+            Ми регулярно оновлюємо склад, щоб ви могли знайти найвигіднішу ціну на {sizeName}. ТОВ &ldquo;Агро-Солар&rdquo;
+            забезпечує комплексний сервіс: консультації, оплата по безготівковому розрахунку з ПДВ, логістичний супровід
+            та офіційну гарантію виробників. Отримайте актуальні наявності та підтримку від професіоналів з великим
+            досвідом роботи в галузі шин до сільськогосподарської та спеціальної техніки. Замовляйте шини {sizeName} в
+            ТОВ &ldquo;Агро-Солар&rdquo; з доставкою по всій Україні та модернізуйте свій парк техніки без простоїв.
+          </p>
+        </section>
       </div>
     </div>
   );

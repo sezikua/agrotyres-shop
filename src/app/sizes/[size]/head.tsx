@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
+import { deriveSizeSeoData } from "@/lib/sizeSeo";
 
 async function getBaseUrl(): Promise<string> {
   const headersList = await headers();
@@ -8,27 +9,62 @@ async function getBaseUrl(): Promise<string> {
   return `${protocol}://${host}`;
 }
 
+type SizeProductForSeo = {
+  id: number;
+  product_name: string;
+  Category?: string | null;
+  Segment?: string | null;
+};
+
 export async function generateMetadata({ params }: { params: Promise<{ size: string }> }): Promise<Metadata> {
   const { size } = await params;
   const baseUrl = await getBaseUrl();
   const decodedSize = decodeURIComponent(size);
   const canonical = `${baseUrl}/sizes/${size}`;
 
+  let itemsForSeo: SizeProductForSeo[] = [];
+  try {
+    const res = await fetch(`${baseUrl}/api/products/size/${encodeURIComponent(decodedSize)}?limit=50`, {
+      next: { revalidate: 300 },
+    });
+    if (res.ok) {
+      const json = await res.json();
+      itemsForSeo = (json?.data || []) as SizeProductForSeo[];
+    }
+  } catch {
+    // ignore and fallback to defaults
+  }
+
+  const { categoriesList, segmentsDescription } = deriveSizeSeoData(itemsForSeo);
+  const categoriesText = categoriesList || "різних типів техніки";
+  const segmentsText = segmentsDescription || "різних напрямів аграрної та індустріальної техніки";
+
+  const title = `Купити ${decodedSize} шини для ${categoriesText} | ТОВ Агро-Солар`;
+  const description = `Великий вибір ${decodedSize} для ${categoriesText}. Знаходьте ${segmentsText}. Оптимальна ціна та доставка по Україні від ТОВ Агро-Солар.`;
+  const keywords = [
+    `шини ${decodedSize}`,
+    `резина ${decodedSize}`,
+    `колеса ${decodedSize}`,
+    `ціна ${decodedSize}`,
+    categoriesText,
+  ].join(", ");
+
   return {
-    title: `Шини розміру ${decodedSize} — CEAT — офіційний імпортер в Україні`,
-    description: `Шини CEAT розміру ${decodedSize}. Високоякісні сільськогосподарські шини з офіційного складу в Україні. CEAT — офіційний імпортер в Україні.`,
+    title,
+    description,
+    keywords,
     alternates: { canonical },
     openGraph: {
-      title: `Шини розміру ${decodedSize} — CEAT — офіційний імпортер в Україні`,
-      description: `Шини CEAT розміру ${decodedSize}. Високоякісні сільськогосподарські шини з офіційного складу в Україні. CEAT — офіційний імпортер в Україні.`,
+      title,
+      description,
       url: canonical,
       type: "website",
-      siteName: "CEAT — офіційний імпортер в Україні",
+      siteName: "ТОВ Агро-Солар",
     },
     twitter: {
       card: "summary_large_image",
-      title: `Шини розміру ${decodedSize} — CEAT — офіційний імпортер в Україні`,
-      description: `Шини CEAT розміру ${decodedSize}. Високоякісні сільськогосподарські шини з офіційного складу в Україні. CEAT — офіційний імпортер в Україні.`,
+      title,
+      description,
     },
   };
 }
@@ -72,7 +108,8 @@ export default async function Head({ params }: { params: Promise<{ size: string 
             '@type': 'BreadcrumbList',
             itemListElement: [
               { '@type': 'ListItem', position: 1, name: 'Головна', item: `${baseUrl}/` },
-              { '@type': 'ListItem', position: 2, name: `Розмір: ${decoded}` , item: `${baseUrl}/sizes/${encodeURIComponent(size)}` },
+              { '@type': 'ListItem', position: 2, name: 'Каталог шин', item: `${baseUrl}/products` },
+              { '@type': 'ListItem', position: 3, name: `Розмір: ${decoded}`, item: `${baseUrl}/sizes/${encodeURIComponent(size)}` },
             ],
           })
         }}
