@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { headers } from "next/headers";
 import ProductCard from "@/components/ProductCard";
 import HomeSizeFilter from "@/components/HomeSizeFilter";
+import HeroVideoSection from "@/components/HeroVideoSection";
 
 async function getBaseUrl(): Promise<string> {
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -96,19 +97,10 @@ export default async function Home() {
 
   return (
     <section>
-      <div className="relative overflow-hidden">
-        <video
-          className="absolute inset-0 h-full w-full object-cover opacity-70 pointer-events-none"
-          src="/website-video-desktop.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-        <div className="absolute inset-0 bg-black/30" />
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pt-16 pb-20">
-          <div className="max-w-2xl relative z-10 text-white">
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight drop-shadow">
+      <HeroVideoSection containerClassName="pb-[3px]">
+        <div className="mx-auto flex h-full w-full max-w-7xl flex-col items-center justify-center gap-8 px-4 sm:px-6 lg:px-8 pt-12 pb-14">
+          <div className="max-w-3xl text-center text-white drop-shadow">
+            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight">
               Cільськогосподарські шини преміум якості від Агро-Солар
             </h1>
             <p className="mt-4 text-base sm:text-lg text-white/90">
@@ -121,12 +113,12 @@ export default async function Home() {
               </Link>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
-        <HomeSizeFilter />
-      </div>
+          <div className="relative w-full max-w-4xl mx-auto">
+            <HomeSizeFilter />
+          </div>
+        </div>
+      </HeroVideoSection>
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <h2 className="text-2xl font-bold mb-6">Категорії</h2>
@@ -182,16 +174,53 @@ function CategoryCard({ category, isMobile = false }: { category: CategoryItem; 
                 priority
               />
             )}
-            {/* Десктопна версія: показуємо відео */}
+            {/* Десктопна версія */}
             {!isMobile && (
-              <video
-                className="absolute inset-0 w-full h-full object-cover"
-                src={category.video}
-                autoPlay
-                muted
-                loop
-                playsInline
-              />
+              <>
+                {/* Для причіпної техніки: відео 16:9 на фоні зображення, без обрізання по висоті */}
+                {category.title === "Шини для причіпної техніки" ? (
+                  <>
+                    {/* Відео: 16:9, на всю ширину блоку, притиснуте до верху */}
+                    <div className="absolute inset-x-0 top-0">
+                      <div className="relative w-full aspect-video">
+                        <video
+                          className="absolute inset-0 h-full w-full object-cover"
+                          src={category.video}
+                          autoPlay
+                          muted
+                          loop
+                          playsInline
+                          preload="metadata"
+                        />
+                      </div>
+                    </div>
+                    {/* Картинка на передньому плані поверх відео */}
+                    <div className="relative z-10 flex h-full w-full items-center justify-center">
+                      <div className="relative w-[80%] h-[80%]">
+                        <Image
+                          src="/trailer-caregory-01.webp"
+                          alt={category.title}
+                          fill
+                          sizes="50vw"
+                          className="object-contain drop-shadow-xl"
+                          priority
+                        />
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <video
+                    className="absolute inset-0 w-full h-full object-cover"
+                    src={category.video}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    poster={category.image}
+                  />
+                )}
+              </>
             )}
           </>
         ) : (
@@ -226,7 +255,8 @@ function CategoriesGrid() {
     { title: "Шини для комбайнів", image: "/harvest-caregory.avif", video: "/website-video-harvester-reel.mp4", href: "/categories/%D0%9A%D0%BE%D0%BC%D0%B1%D0%B0%D0%B9%D0%BD%D0%B8", isSpecial: true },
     { title: "Шини для навантажувачів", image: "/loader-caregory.avif", href: "/categories/THL%2FCompact%20Loader" },
     { title: "Шини для обприскувачів", image: "/splayer-caregory.avif", video: "/website-video-sprayer-reel.mp4", href: "/categories/%D0%9E%D0%B1%D0%BF%D1%80%D0%B8%D1%81%D0%BA%D1%83%D0%B2%D0%B0%D1%87%D1%96", isSpecial: true },
-    { title: "Шини для причіпної техніки", image: "/trailer-caregory.avif", href: "/categories/%D0%9D%D0%B0%D0%B2%D1%96%D1%81%D0%BD%D0%B5%20%D1%82%D0%B0%20%D0%9F%D1%80%D0%B8%D1%87%D1%96%D0%BF%D0%BD%D0%B5%20%D0%9E%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F" },
+    // Для мобільної версії причіпної техніки використовуємо іншу картинку без відео
+    { title: "Шини для причіпної техніки", image: "/trailer-caregory.webp", video: "/Video_CEAT_FLOATMAX_VF_X3.mp4", href: "/categories/%D0%9D%D0%B0%D0%B2%D1%96%D1%81%D0%BD%D0%B5%20%D1%82%D0%B0%20%D0%9F%D1%80%D0%B8%D1%87%D1%96%D0%BF%D0%BD%D0%B5%20%D0%9E%D0%B1%D0%BB%D0%B0%D0%B4%D0%BD%D0%B0%D0%BD%D0%BD%D1%8F", isSpecial: true },
   ];
 
   const [firstCategory, ...otherCategories] = categories;
