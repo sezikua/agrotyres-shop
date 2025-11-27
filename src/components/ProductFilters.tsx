@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Filter, X } from 'lucide-react';
 import { Product, fetchFilteredProducts, FilterOptions, PaginationInfo } from '@/lib/api';
+import { loadSizeFilterData, sortDiameterValues, type SizeFilterMap } from '@/lib/sizeFilterData';
 
 interface ProductFiltersProps {
   onFiltersChange: (filteredProducts: Product[], pagination?: PaginationInfo) => void;
@@ -22,6 +23,7 @@ export default function ProductFilters({ onFiltersChange, onLoadingChange, curre
   const [availableCategories, setAvailableCategories] = useState<string[]>([]);
   const [availableDiameters, setAvailableDiameters] = useState<string[]>([]);
   const [availableSizes, setAvailableSizes] = useState<string[]>([]);
+  const [sizeFilterData, setSizeFilterData] = useState<SizeFilterMap>({});
   const [loading, setLoading] = useState(true);
 
   // Load all categories and diameters from API
@@ -29,30 +31,29 @@ export default function ProductFilters({ onFiltersChange, onLoadingChange, curre
     const loadFilterOptions = async () => {
       try {
         setLoading(true);
-        const [categoriesResponse, productsResponse] = await Promise.all([
-          fetch('/api/categories'),
-          fetch('/api/products?limit=1000') // Get all products to extract diameters
-        ]);
+        const categoriesResponse = await fetch('/api/categories');
+        const sizeData = await loadSizeFilterData();
 
-        if (categoriesResponse.ok && productsResponse.ok) {
-          const [categoriesData, productsData] = await Promise.all([
-            categoriesResponse.json(),
-            productsResponse.json()
-          ]);
-          
+        if (categoriesResponse.ok) {
+          const categoriesData = await categoriesResponse.json();
           setAllCategories(categoriesData.categories || []);
           setAvailableCategories(categoriesData.categories || []);
-          
-          // Extract unique diameters from products
-          const diameters = [...new Set(productsData.data.map((product: Product) => product.diameter).filter(Boolean))] as string[];
-          const sortedDiameters = diameters.sort((a, b) => parseFloat(a) - parseFloat(b));
-          setAllDiameters(sortedDiameters);
-          setAvailableDiameters(sortedDiameters);
+        } else {
+          setAllCategories([]);
+          setAvailableCategories([]);
         }
+
+        setSizeFilterData(sizeData);
+        const sortedDiameters = sortDiameterValues(Object.keys(sizeData));
+        setAllDiameters(sortedDiameters);
+        setAvailableDiameters(sortedDiameters);
       } catch (error) {
         console.error('Error loading filter options:', error);
         setAllCategories([]);
         setAllDiameters([]);
+        setSizeFilterData({});
+        setAvailableCategories([]);
+        setAvailableDiameters([]);
       } finally {
         setLoading(false);
       }
@@ -80,56 +81,58 @@ export default function ProductFilters({ onFiltersChange, onLoadingChange, curre
   useEffect(() => {
     const updateAvailableOptions = async () => {
       if (!selectedCategory && !selectedDiameter) {
-        // No filters selected, show all options
         setAvailableCategories(allCategories);
         setAvailableDiameters(allDiameters);
         setAvailableSizes([]);
         return;
       }
 
+      if (!selectedCategory && selectedDiameter) {
+        setAvailableCategories(allCategories);
+        setAvailableDiameters(allDiameters);
+        setAvailableSizes(sizeFilterData[selectedDiameter] ?? []);
+        return;
+      }
+
+      if (!selectedCategory) {
+        return;
+      }
+
       try {
+        setLoading(true);
         const filters: FilterOptions = {
           page: 1,
           limit: 1000,
+          categories: [selectedCategory],
         };
-
-        if (selectedCategory) {
-          filters.categories = [selectedCategory];
-        }
 
         const response = await fetchFilteredProducts(filters);
         const products = response.data;
 
-        // Get unique categories, diameters, and sizes from filtered products
-        const uniqueCategories = [...new Set(products.map(p => p.Category))];
-        const uniqueDiameters = [...new Set(products.map(p => p.diameter).filter(Boolean))];
-        const sortedDiameters = uniqueDiameters.sort((a, b) => parseFloat(a) - parseFloat(b));
+        const uniqueDiameters = [...new Set(products.map((p) => p.diameter).filter(Boolean))] as string[];
+        const sortedDiameters = sortDiameterValues(uniqueDiameters);
+        setAvailableDiameters(sortedDiameters);
+        setAvailableCategories(allCategories);
 
-        if (selectedCategory) {
-          // If category is selected, show only diameters that exist with this category
-          setAvailableDiameters(sortedDiameters);
-          setAvailableCategories(allCategories); // Keep all categories available
-          setAvailableSizes([]); // Clear sizes
-        } else if (selectedDiameter) {
-          // If diameter is selected, show only categories and sizes that exist with this diameter
-          setAvailableCategories(uniqueCategories);
-          setAvailableDiameters(allDiameters); // Keep all diameters available
-          
-          // Get sizes for selected diameter
-          const diameterProducts = products.filter(p => p.diameter === selectedDiameter);
-          const uniqueSizes = [...new Set(diameterProducts.map(p => p.size).filter(Boolean))];
-          setAvailableSizes(uniqueSizes);
+        if (selectedDiameter) {
+          const diameterProducts = products.filter((p) => p.diameter === selectedDiameter);
+          const uniqueSizes = [...new Set(diameterProducts.map((p) => p.size).filter(Boolean))] as string[];
+          setAvailableSizes(uniqueSizes.sort((a, b) => a.localeCompare(b, 'uk')));
+        } else {
+          setAvailableSizes([]);
         }
       } catch (error) {
         console.error('Error updating available options:', error);
         setAvailableCategories(allCategories);
         setAvailableDiameters(allDiameters);
         setAvailableSizes([]);
+      } finally {
+        setLoading(false);
       }
     };
 
     updateAvailableOptions();
-  }, [selectedCategory, selectedDiameter, allCategories, allDiameters]);
+  }, [selectedCategory, selectedDiameter, allCategories, allDiameters, sizeFilterData]);
 
   // Apply filters function (called manually)
   const applyFilters = useCallback(async () => {

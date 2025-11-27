@@ -1,5 +1,11 @@
 import { NextResponse } from 'next/server';
 
+type DirectusProduct = {
+  warehouse?: string | null;
+  product_name?: string | null;
+  [key: string]: unknown;
+};
+
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ segment: string }> }
@@ -42,21 +48,19 @@ export async function GET(
     
     // Кастомне сортування за наявністю: In stock -> On order -> out of stock
     const warehouseOrder = { 'In stock': 1, 'On order': 2, 'out of stock': 3 };
-    const allProducts = data.data || [];
+    const allProducts = (Array.isArray(data.data) ? data.data : []) as DirectusProduct[];
     
-    if (Array.isArray(allProducts)) {
-      allProducts.sort((a: any, b: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
-        const aOrder = warehouseOrder[a.warehouse as keyof typeof warehouseOrder] || 4;
-        const bOrder = warehouseOrder[b.warehouse as keyof typeof warehouseOrder] || 4;
-        
-        if (aOrder !== bOrder) {
-          return aOrder - bOrder;
-        }
-        
-        // Якщо наявність однакова, сортуємо за назвою
-        return a.product_name.localeCompare(b.product_name);
-      });
-    }
+    allProducts.sort((a, b) => {
+      const aOrder = warehouseOrder[a.warehouse as keyof typeof warehouseOrder] || 4;
+      const bOrder = warehouseOrder[b.warehouse as keyof typeof warehouseOrder] || 4;
+      
+      if (aOrder !== bOrder) {
+        return aOrder - bOrder;
+      }
+      
+      // Якщо наявність однакова, сортуємо за назвою
+      return (a.product_name ?? '').localeCompare(b.product_name ?? '');
+    });
     
     // Тепер ділимо на сторінки після сортування
     const totalItems = allProducts.length;

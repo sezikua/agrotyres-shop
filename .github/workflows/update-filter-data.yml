@@ -1,0 +1,41 @@
+name: Refresh size filter data
+
+on:
+  schedule:
+    - cron: "0 2 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-filter:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build size filter JSON
+        run: node scripts/buildSizeFilterData.mjs
+        env:
+          DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
+          DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/size-filter-data.json
+          git commit -m "chore: refresh size filter data" || echo "No changes"
+
+      - name: Push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: git push
+

@@ -2,12 +2,21 @@
 
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { startTransition, useEffect, useState } from "react";
 
 export default function ThemeToggle() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
+
+  useEffect(() => {
+    const frameId = requestAnimationFrame(() => {
+      startTransition(() => {
+        setMounted(true);
+      });
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, []);
 
   const isDark = (resolvedTheme ?? theme) === "dark";
 

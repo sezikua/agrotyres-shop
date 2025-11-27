@@ -3,11 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useMemo, useState } from 'react';
 import { Loader2, Search } from 'lucide-react';
-import type { Product } from '@/lib/api';
-
-type ProductsResponse = {
-  data: Product[];
-};
+import { loadSizeFilterData, sortDiameterValues, type SizeFilterMap } from '@/lib/sizeFilterData';
 
 const formatDiameterLabel = (value: string) => {
   const num = parseFloat(value);
@@ -21,40 +17,23 @@ export default function HomeSizeFilter() {
   const [selectedDiameter, setSelectedDiameter] = useState('');
   const [selectedSize, setSelectedSize] = useState('');
   const [diameterOptions, setDiameterOptions] = useState<string[]>([]);
-  const [sizesMap, setSizesMap] = useState<Record<string, string[]>>({});
+  const [sizesMap, setSizesMap] = useState<SizeFilterMap>({});
 
   useEffect(() => {
     let mounted = true;
-    const loadProducts = async () => {
+    const loadData = async () => {
       try {
         setLoading(true);
-        const res = await fetch('/api/products?limit=1000', { cache: 'no-store' });
-        if (!res.ok) return;
-        const data: ProductsResponse = await res.json();
-        const map = new Map<string, Set<string>>();
-
-        data.data.forEach((product) => {
-          const diameter = product.diameter?.trim();
-          const size = product.size?.trim();
-          if (!diameter || !size) return;
-          if (!map.has(diameter)) {
-            map.set(diameter, new Set());
-          }
-          map.get(diameter)?.add(size);
-        });
-
-        const sortedDiameters = Array.from(map.keys()).sort((a, b) => parseFloat(a) - parseFloat(b));
-        const preparedSizes = sortedDiameters.reduce<Record<string, string[]>>((acc, diameter) => {
-          acc[diameter] = Array.from(map.get(diameter) ?? []).sort((a, b) => a.localeCompare(b, 'uk'));
-          return acc;
-        }, {});
-
-        if (mounted) {
-          setDiameterOptions(sortedDiameters);
-          setSizesMap(preparedSizes);
-        }
+        const data = await loadSizeFilterData();
+        if (!mounted) return;
+        setSizesMap(data);
+        setDiameterOptions(sortDiameterValues(Object.keys(data)));
       } catch (error) {
         console.error('Error loading quick filter options:', error);
+        if (mounted) {
+          setSizesMap({});
+          setDiameterOptions([]);
+        }
       } finally {
         if (mounted) {
           setLoading(false);
@@ -62,7 +41,7 @@ export default function HomeSizeFilter() {
       }
     };
 
-    loadProducts();
+    loadData();
     return () => {
       mounted = false;
     };

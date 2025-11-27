@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import ProductCard from "@/components/ProductCard";
 import HomeSizeFilter from "@/components/HomeSizeFilter";
 import HeroVideoSection from "@/components/HeroVideoSection";
+import type { Product } from "@/lib/api";
 
 async function getBaseUrl(): Promise<string> {
   const envUrl = process.env.NEXT_PUBLIC_SITE_URL;
@@ -43,7 +44,11 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-async function getDiscountedProducts() {
+type DirectusListResponse<T> = {
+  data?: T[];
+};
+
+async function getDiscountedProducts(): Promise<Product[]> {
   try {
     // Отримуємо товари напряму з Directus API на сервері
     const directusUrl = process.env.DIRECTUS_URL || 'http://173.212.215.18:8055';
@@ -66,13 +71,12 @@ async function getDiscountedProducts() {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const discountedProducts: any[] = data.data || [];
+    const data: DirectusListResponse<Product> = await response.json();
+    const discountedProducts = Array.isArray(data.data) ? data.data : [];
     
     // Кастомне сортування за наявністю: In stock -> On order -> out of stock
     const warehouseOrder = { 'In stock': 1, 'On order': 2, 'out of stock': 3 };
-    discountedProducts.sort((a: any, b: any) => { // eslint-disable-line @typescript-eslint/no-explicit-any
+    discountedProducts.sort((a, b) => {
       const aOrder = warehouseOrder[a.warehouse as keyof typeof warehouseOrder] || 4;
       const bOrder = warehouseOrder[b.warehouse as keyof typeof warehouseOrder] || 4;
       
