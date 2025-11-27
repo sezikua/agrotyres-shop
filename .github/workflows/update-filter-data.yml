@@ -34,6 +34,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase
           git add public/size-filter-data.json
           git commit -m "chore: refresh size filter data" || echo "No changes"
 
