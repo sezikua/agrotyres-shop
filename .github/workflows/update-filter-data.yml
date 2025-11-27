@@ -33,7 +33,9 @@ jobs:
           DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
           DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
 
-      - name: Commit changes
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -41,11 +43,5 @@ jobs:
           git rebase origin/main || { git rebase --abort; exit 1; }
           git add public/size-filter-data.json
           git commit -m "chore: refresh size filter data" || echo "No changes"
-          git fetch origin main
-          git rebase origin/main || { git rebase --abort; exit 1; }
-
-      - name: Push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: git push --force-with-lease origin HEAD:main
+          git push origin HEAD:main
 
