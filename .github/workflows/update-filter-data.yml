@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -33,10 +33,13 @@ jobs:
           DIRECTUS_URL: ${{ secrets.DIRECTUS_URL }}
           DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
 
-      - name: Commit and push
+      - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: refresh size filter data"
           file_pattern: public/size-filter-data.json
           commit_options: "--no-verify"
+          push_options: "--force-with-lease"
+          skip_fetch: false
+          skip_checkout: false
 
