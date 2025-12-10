@@ -39,16 +39,21 @@ export default function ProductPageBySlug() {
     return parseFloat(price).toLocaleString('uk-UA');
   };
 
-  const getWarehouseStatus = (warehouse: string) => {
+  const getWarehouseStatus = (warehouse: string, onTheWay?: boolean) => {
+    // Special case: "Товар в дорозі" when warehouse is "On order" and on_the_way is true
+    if (warehouse.toLowerCase() === 'on order' && onTheWay === true) {
+      return { text: 'Товар в дорозі', color: 'text-white', bg: '', customBg: '#0055aa', icon: '🚚' };
+    }
+    
     switch (warehouse.toLowerCase()) {
       case 'in stock':
-        return { text: 'В наявності', color: 'text-background', bg: 'bg-primary', icon: '✓' };
+        return { text: 'В наявності', color: 'text-background', bg: 'bg-primary', customBg: undefined, icon: '✓' };
       case 'on order':
-        return { text: 'Під замовлення', color: 'text-black', bg: 'bg-yellow-400', icon: '⏳' };
+        return { text: 'Під замовлення', color: 'text-black', bg: 'bg-yellow-400', customBg: undefined, icon: '⏳' };
       case 'out of stock':
-        return { text: 'Немає в наявності', color: 'text-black', bg: 'bg-red-500', icon: '✗' };
+        return { text: 'Немає в наявності', color: 'text-black', bg: 'bg-red-500', customBg: undefined, icon: '✗' };
       default:
-        return { text: warehouse, color: 'text-black', bg: 'bg-gray-500', icon: '?' };
+        return { text: warehouse, color: 'text-black', bg: 'bg-gray-500', customBg: undefined, icon: '?' };
     }
   };
 
@@ -109,7 +114,7 @@ export default function ProductPageBySlug() {
     );
   }
 
-  const warehouseStatus = getWarehouseStatus(product.warehouse);
+  const warehouseStatus = getWarehouseStatus(product.warehouse, product.on_the_way);
   const brandUpper = (product.brand || '').toUpperCase();
   const brandDisplay = brandUpper === 'TRELLEBORG' ? 'Trelleborg' : 'CEAT';
   const warrantyYears = brandUpper === 'TRELLEBORG' ? 6 : 7;
@@ -155,7 +160,10 @@ export default function ProductPageBySlug() {
               )}
 
               {/* Warehouse Status - top left over image */}
-              <div className={`absolute top-3 left-3 z-10 px-2 py-1 rounded-full text-xs font-medium ${warehouseStatus.bg} ${warehouseStatus.color}`}>
+              <div 
+                className={`absolute top-3 left-3 z-10 px-2 py-1 rounded-full text-xs font-medium ${warehouseStatus.bg} ${warehouseStatus.color}`}
+                style={warehouseStatus.customBg ? { backgroundColor: warehouseStatus.customBg } : undefined}
+              >
                 <span className="mr-1">{warehouseStatus.icon}</span>
                 {warehouseStatus.text}
               </div>

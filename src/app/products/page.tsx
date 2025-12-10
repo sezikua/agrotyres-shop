@@ -1,10 +1,12 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { fetchProducts, Product, PaginationInfo } from '@/lib/api';
+import { fetchProducts, Product, PaginationInfo, getProductImageUrl } from '@/lib/api';
 import ProductCard from '@/components/ProductCard';
 import ProductFilters from '@/components/ProductFilters';
 import { Loader2, Package, Grid, List, ChevronLeft, ChevronRight, Search, X } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -17,6 +19,40 @@ export default function ProductsPage() {
   const [pagination, setPagination] = useState<PaginationInfo | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+
+  const formatPrice = (price: string) => parseFloat(price).toLocaleString('uk-UA');
+
+  const formatDiameterLabel = (diameter?: string | null) => {
+    if (!diameter) return null;
+    const num = parseFloat(diameter);
+    if (Number.isNaN(num)) return `Ø${diameter}"`;
+    return `Ø${num.toString()}"`;
+  };
+
+  const getWarehouseStatus = (warehouse: string, onTheWay?: boolean) => {
+    if (warehouse.toLowerCase() === 'on order' && onTheWay === true) {
+      return { text: 'Товар в дорозі', color: 'text-white', bg: '', customBg: '#0055aa' as string };
+    }
+    switch (warehouse.toLowerCase()) {
+      case 'in stock':
+        return { text: 'В наявності', color: 'text-background', bg: 'bg-primary', customBg: undefined };
+      case 'on order':
+        return { text: 'Під замовлення', color: 'text-black', bg: 'bg-yellow-400', customBg: undefined };
+      case 'out of stock':
+        return { text: 'Немає в наявності', color: 'text-black', bg: 'bg-red-500', customBg: undefined };
+      default:
+        return { text: warehouse, color: 'text-black', bg: 'bg-gray-500', customBg: undefined };
+    }
+  };
+
+  const handleAddToCart = (productToAdd: Product) => {
+    if (typeof window !== 'undefined') {
+      const windowWithCart = window as Window & { addToCart?: (product: Product) => void };
+      if (windowWithCart.addToCart) {
+        windowWithCart.addToCart(productToAdd);
+      }
+    }
+  };
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -244,17 +280,110 @@ export default function ProductsPage() {
                 </p>
               </div>
             ) : (
-              <div
-                className={`grid gap-6 ${
-                  viewMode === 'grid'
-                    ? 'grid-cols-2 lg:grid-cols-3'
-                    : 'grid-cols-1'
-                }`}
-              >
-                {sortedProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+              <>
+                {viewMode === 'grid' ? (
+                  <div className="grid gap-6 grid-cols-2 lg:grid-cols-3">
+                    {sortedProducts.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-4">
+                    {sortedProducts.map((product) => {
+                      const warehouseStatus = getWarehouseStatus(product.warehouse, product.on_the_way);
+                      return (
+                        <div
+                          key={product.id}
+                          className="flex flex-col sm:flex-row items-start sm:items-center gap-4 p-4 border border-foreground/10 rounded-xl bg-background shadow-sm hover:shadow-md transition-all"
+                        >
+                          <div className="relative h-20 w-20 bg-foreground/5 rounded-lg overflow-hidden flex-shrink-0">
+                            <Image
+                              src={getProductImageUrl(product.product_image)}
+                              alt={product.product_name}
+                              fill
+                              className="object-contain"
+                              sizes="80px"
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = '/placeholder-image.svg';
+                              }}
+                            />
+                          </div>
+
+                          <div className="flex-1 min-w-0 w-full">
+                            <div className="flex items-center gap-2 flex-wrap mb-1">
+                              <span className="text-xs text-foreground/70 bg-foreground/10 px-2 py-1 rounded-full">
+                                {product.Category}
+                              </span>
+                              <span className="text-xs text-foreground/70 bg-foreground/10 px-2 py-1 rounded-full">
+                                {product.Segment}
+                              </span>
+                              <span
+                                className={`text-xs font-medium px-2 py-1 rounded-full ${warehouseStatus.bg} ${warehouseStatus.color}`}
+                                style={warehouseStatus.customBg ? { backgroundColor: warehouseStatus.customBg } : undefined}
+                              >
+                                {warehouseStatus.text}
+                              </span>
+                            </div>
+
+                            <Link href={`/products/${encodeURIComponent(product.slug || String(product.id))}`}>
+                              <h3 className="font-semibold text-foreground mb-1 line-clamp-1 hover:text-primary transition-colors">
+                                {product.product_name}
+                              </h3>
+                            </Link>
+
+                            <div className="text-sm text-foreground/70 flex flex-wrap gap-3">
+                              <span><strong className="text-foreground">Модель:</strong> {product.model}</span>
+                              <span><strong className="text-foreground">Розмір:</strong> {product.size}</span>
+                              {product.diameter && (
+                                <span><strong className="text-foreground">Діаметр:</strong> {formatDiameterLabel(product.diameter)}</span>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:items-end gap-2 w-full sm:w-auto">
+                            <div className="text-right">
+                              {product.discount_price ? (
+                                <div className="flex flex-row sm:flex-col items-start sm:items-end gap-2">
+                                  <span className="text-lg font-bold text-red-600">
+                                    {formatPrice(product.discount_price)} грн
+                                  </span>
+                                  <span className="text-sm text-foreground/50 line-through">
+                                    {formatPrice(product.regular_price)} грн
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-xl font-bold text-foreground">
+                                  {formatPrice(product.regular_price)} грн
+                                </span>
+                              )}
+                            </div>
+                            <div className="flex flex-wrap gap-2 justify-end">
+                              <button
+                                onClick={() => handleAddToCart(product)}
+                                disabled={product.warehouse.toLowerCase() === 'out of stock'}
+                                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                  product.warehouse.toLowerCase() === 'out of stock'
+                                    ? 'bg-foreground/20 text-foreground/50 cursor-not-allowed'
+                                    : 'bg-primary text-background hover:bg-primary/90'
+                                }`}
+                              >
+                                {product.warehouse.toLowerCase() === 'out of stock' ? 'Немає в наявності' : 'Додати в кошик'}
+                              </button>
+                              <Link
+                                href={`/products/${encodeURIComponent(product.slug || String(product.id))}`}
+                                className="px-4 py-2 rounded-lg text-sm font-medium border border-foreground/20 text-foreground hover:border-primary hover:text-primary transition-colors"
+                              >
+                                Детальніше
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </>
             )}
 
             {/* Pagination */}

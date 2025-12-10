@@ -17,7 +17,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -34,12 +33,17 @@ jobs:
           DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
 
       - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: refresh size filter data"
-          file_pattern: public/size-filter-data.json
-          commit_options: "--no-verify"
-          push_options: "--force-with-lease"
-          skip_fetch: false
-          skip_checkout: false
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          if git diff --quiet public/size-filter-data.json; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          
+          git add public/size-filter-data.json
+          git commit -m "chore: refresh size filter data" -m "Automated commit"
+          git pull origin main --rebase --no-edit || true
+          git push origin main
 

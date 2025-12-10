@@ -16,6 +16,7 @@ export interface Product {
   warehouse: string;
   slug?: string;
   brand?: string;
+  on_the_way?: boolean;
 }
 
 export interface PaginationInfo {

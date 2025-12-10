@@ -41,16 +41,21 @@ export default function SimilarProducts({ currentProductId, size }: SimilarProdu
     return parseFloat(price).toLocaleString('uk-UA');
   };
 
-  const getWarehouseStatus = (warehouse: string) => {
+  const getWarehouseStatus = (warehouse: string, onTheWay?: boolean) => {
+    // Special case: "Товар в дорозі" when warehouse is "On order" and on_the_way is true
+    if (warehouse.toLowerCase() === 'on order' && onTheWay === true) {
+      return { text: 'Товар в дорозі', color: 'text-white', bg: '', customBg: '#0055aa' };
+    }
+    
     switch (warehouse.toLowerCase()) {
       case 'in stock':
-        return { text: 'В наявності', color: 'text-background', bg: 'bg-primary' };
+        return { text: 'В наявності', color: 'text-background', bg: 'bg-primary', customBg: undefined };
       case 'on order':
-        return { text: 'Під замовлення', color: 'text-black', bg: 'bg-yellow-400' };
+        return { text: 'Під замовлення', color: 'text-black', bg: 'bg-yellow-400', customBg: undefined };
       case 'out of stock':
-        return { text: 'Немає в наявності', color: 'text-black', bg: 'bg-red-500' };
+        return { text: 'Немає в наявності', color: 'text-black', bg: 'bg-red-500', customBg: undefined };
       default:
-        return { text: warehouse, color: 'text-black', bg: 'bg-gray-500' };
+        return { text: warehouse, color: 'text-black', bg: 'bg-gray-500', customBg: undefined };
     }
   };
 
@@ -130,7 +135,7 @@ export default function SimilarProducts({ currentProductId, size }: SimilarProdu
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {products.map((product) => {
-          const warehouseStatus = getWarehouseStatus(product.warehouse);
+          const warehouseStatus = getWarehouseStatus(product.warehouse, product.on_the_way);
           
           return (
             <div
@@ -167,7 +172,10 @@ export default function SimilarProducts({ currentProductId, size }: SimilarProdu
 
               <div className="p-4">
                 {/* Warehouse Status */}
-                <div className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium mb-3 ${warehouseStatus.bg} ${warehouseStatus.color}`}>
+                <div 
+                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium mb-3 ${warehouseStatus.bg} ${warehouseStatus.color}`}
+                  style={warehouseStatus.customBg ? { backgroundColor: warehouseStatus.customBg } : undefined}
+                >
                   {warehouseStatus.text}
                 </div>
 
