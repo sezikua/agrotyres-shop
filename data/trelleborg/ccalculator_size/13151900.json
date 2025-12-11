@@ -1,0 +1,203 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "W18L; DW20B",
+    "cclist": [
+      {
+        "pressure": "0.6 bar",
+        "speed": "10 HT S",
+        "load": "2445"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "10 LT S",
+        "load": "2890"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "30 S",
+        "load": "2445"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "40 S",
+        "load": "2325"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "50 S",
+        "load": "2230"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "65 S",
+        "load": "2125"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "10 HT S",
+        "load": "2825"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "10 LT S",
+        "load": "3335"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "30 S",
+        "load": "2825"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "40 S",
+        "load": "2690"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "50 S",
+        "load": "2575"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "65 S",
+        "load": "2455"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "10 HT S",
+        "load": "3200"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "10 LT S",
+        "load": "3785"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "30 S",
+        "load": "3200"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "40 S",
+        "load": "3050"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "50 S",
+        "load": "2925"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "65 S",
+        "load": "2785"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "10 HT S",
+        "load": "3540"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "10 LT S",
+        "load": "4185"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "30 S",
+        "load": "3540"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "40 S",
+        "load": "3370"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "50 S",
+        "load": "3230"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "65 S",
+        "load": "3075"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "10 HT S",
+        "load": "3875"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "10 LT S",
+        "load": "4580"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "30 S",
+        "load": "3875"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "40 S",
+        "load": "3690"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "50 S",
+        "load": "3540"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "65 S",
+        "load": "3370"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "10 HT S",
+        "load": "4210"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "10 LT S",
+        "load": "4980"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "30 S",
+        "load": "4210"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "40 S",
+        "load": "4010"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "50 S",
+        "load": "3845"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "65 S",
+        "load": "3660"
+      },
+      {
+        "pressure": "1.8 bar",
+        "speed": "10 LT S",
+        "load": "5325"
+      },
+      {
+        "pressure": "1.9 bar",
+        "speed": "10 LT S",
+        "load": "5490"
+      },
+      {
+        "pressure": "2.1 bar",
+        "speed": "10 LT S",
+        "load": "6225"
+      }
+    ]
+  }
+}

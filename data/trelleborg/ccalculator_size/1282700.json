@@ -1,0 +1,308 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "",
+    "cclist": [
+      {
+        "pressure": "0.8  bar",
+        "speed": "10 heavy terrain",
+        "load": "2710"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "10 light terrain",
+        "load": "3330"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "10 very heavy terrain",
+        "load": "2220"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "30 road",
+        "load": "2710"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "40 road",
+        "load": "2170"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "10 heavy terrain",
+        "load": "3085"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "10 light terrain",
+        "load": "3790"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "10 very heavy terrain",
+        "load": "2530"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "30 road",
+        "load": "3085"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "40 road",
+        "load": "2470"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "10 heavy terrain",
+        "load": "3435"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "10 light terrain",
+        "load": "4220"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "10 very heavy terrain",
+        "load": "2815"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "30 road",
+        "load": "3435"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "40 road",
+        "load": "2750"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "10 heavy terrain",
+        "load": "3760"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "10 light terrain",
+        "load": "4615"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "10 very heavy terrain",
+        "load": "3085"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "30 road",
+        "load": "3760"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "40 road",
+        "load": "3010"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "10 heavy terrain",
+        "load": "4065"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "10 light terrain",
+        "load": "4990"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "10 very heavy terrain",
+        "load": "3335"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "30 road",
+        "load": "4065"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "40 road",
+        "load": "3250"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "10 heavy terrain",
+        "load": "4355"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "10 light terrain",
+        "load": "5350"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "10 very heavy terrain",
+        "load": "3570"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "30 road",
+        "load": "4355"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "40 road",
+        "load": "3485"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "10 heavy terrain",
+        "load": "4630"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "10 light terrain",
+        "load": "5385"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "10 very heavy terrain",
+        "load": "3795"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "30 road",
+        "load": "4630"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "40 road",
+        "load": "3705"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "10 heavy terrain",
+        "load": "4765"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "10 light terrain",
+        "load": "5850"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "10 very heavy terrain",
+        "load": "3905"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "30 road",
+        "load": "4765"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "40 road",
+        "load": "3810"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "10 heavy terrain",
+        "load": "4895"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "10 light terrain",
+        "load": "6010"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "10 very heavy terrain",
+        "load": "4015"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "30 road",
+        "load": "4895"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "40 road",
+        "load": "3915"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "10 heavy terrain",
+        "load": "5150"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "10 light terrain",
+        "load": "6325"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "10 very heavy terrain",
+        "load": "4225"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "30 road",
+        "load": "5150"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "40 road",
+        "load": "4120"
+      },
+      {
+        "pressure": "2.6  bar",
+        "speed": "10 light terrain",
+        "load": "6625"
+      },
+      {
+        "pressure": "2.6  bar",
+        "speed": "10 very heavy terrain",
+        "load": "4425"
+      },
+      {
+        "pressure": "2.8  bar",
+        "speed": "10 light terrain",
+        "load": "6920"
+      },
+      {
+        "pressure": "2.8  bar",
+        "speed": "10 very heavy terrain",
+        "load": "4620"
+      },
+      {
+        "pressure": "2.9  bar",
+        "speed": "10 light terrain",
+        "load": "7065"
+      },
+      {
+        "pressure": "2.9  bar",
+        "speed": "10 very heavy terrain",
+        "load": "4720"
+      },
+      {
+        "pressure": "3.0  bar",
+        "speed": "10 light terrain",
+        "load": "7210"
+      },
+      {
+        "pressure": "3.0  bar",
+        "speed": "10 very heavy terrain",
+        "load": "4815"
+      },
+      {
+        "pressure": "3.2  bar",
+        "speed": "10 very heavy terrain",
+        "load": "5000"
+      },
+      {
+        "pressure": "3.3  bar",
+        "speed": "10 very heavy terrain",
+        "load": "5090"
+      }
+    ]
+  }
+}

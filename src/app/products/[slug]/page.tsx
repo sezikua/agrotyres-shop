@@ -9,12 +9,38 @@ import Image from 'next/image';
 import { Loader2, Package } from 'lucide-react';
 import SimilarProducts from '@/components/SimilarProducts';
 
+type CCalcEntry = {
+  pressure: string;
+  speed: string;
+  load: string;
+};
+
+type CCalcData = {
+  PermittedRims?: string;
+  cclist?: CCalcEntry[];
+  meta?: {
+    OD?: string;
+    RC?: string;
+    SRI?: string;
+    RimWidth?: string;
+    PermittedRims?: string;
+  };
+};
+
 export default function ProductPageBySlug() {
   const params = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'description' | 'specs'>('description');
+  const [trelleborgHtml, setTrelleborgHtml] = useState<string | null>(null);
+  const [trelleborgLoading, setTrelleborgLoading] = useState(false);
+  const [trelleborgError, setTrelleborgError] = useState<string | null>(null);
+  const [ccalc, setCcalc] = useState<CCalcData | null>(null);
+  const [ccalcLoading, setCcalcLoading] = useState(false);
+  const [ccalcError, setCcalcError] = useState<string | null>(null);
+  const [selectedSpeed, setSelectedSpeed] = useState<string>('');
+  const [selectedLoad, setSelectedLoad] = useState<string>('');
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -34,6 +60,142 @@ export default function ProductPageBySlug() {
 
     loadProduct();
   }, [params]);
+
+  useEffect(() => {
+    const loadTable = async () => {
+      if (!product) {
+        setTrelleborgHtml(null);
+        setTrelleborgError(null);
+        setTrelleborgLoading(false);
+        return;
+      }
+
+      const brand = (product.brand || '').toUpperCase();
+      if (brand !== 'TRELLEBORG' || !product.sku) {
+        setTrelleborgHtml(null);
+        setTrelleborgError(null);
+        setTrelleborgLoading(false);
+        return;
+      }
+
+      try {
+        setTrelleborgLoading(true);
+        setTrelleborgError(null);
+        const res = await fetch(`/api/trelleborg/size?sku=${encodeURIComponent(product.sku)}`);
+        if (!res.ok) {
+          throw new Error(`Таблицю не знайдено (код ${res.status})`);
+        }
+        const data = (await res.json()) as { html?: string };
+        setTrelleborgHtml(data.html ?? null);
+      } catch (err) {
+        console.error('[product-page] failed to load Trelleborg table', err);
+        setTrelleborgHtml(null);
+        setTrelleborgError('Не вдалося завантажити технічну таблицю Trelleborg');
+      } finally {
+        setTrelleborgLoading(false);
+      }
+    };
+
+    loadTable();
+  }, [product]);
+
+  useEffect(() => {
+    const loadCcalc = async () => {
+      if (!product) {
+        setCcalc(null);
+        setCcalcError(null);
+        setCcalcLoading(false);
+        return;
+      }
+      const brand = (product.brand || '').toUpperCase();
+      if (brand !== 'TRELLEBORG' || !product.sku) {
+        setCcalc(null);
+        setCcalcError(null);
+        setCcalcLoading(false);
+        return;
+      }
+
+      try {
+        setCcalcLoading(true);
+        setCcalcError(null);
+        const res = await fetch(`/api/trelleborg/ccalc?sku=${encodeURIComponent(product.sku)}`);
+        if (!res.ok) {
+          throw new Error(`Калькулятор не знайдено (код ${res.status})`);
+        }
+        const data = (await res.json()) as CCalcData;
+        setCcalc(data);
+        const speeds = Array.from(new Set((data.cclist ?? []).map((i) => i.speed))).sort((a, b) =>
+          a.localeCompare(b, 'uk'),
+        );
+        setSelectedSpeed((prev) => (prev && speeds.includes(prev) ? prev : speeds[0] ?? ''));
+        const loadsForFirstSpeed = (data.cclist ?? [])
+          .filter((i) => i.speed === (speeds[0] ?? ''))
+          .map((i) => i.load);
+        setSelectedLoad((prev) =>
+          prev && loadsForFirstSpeed.includes(prev) ? prev : loadsForFirstSpeed[0] ?? '',
+        );
+      } catch (err) {
+        console.error('[product-page] failed to load Trelleborg ccalc', err);
+        setCcalc(null);
+        setCcalcError('Не вдалося завантажити калькулятор тиску');
+      } finally {
+        setCcalcLoading(false);
+      }
+    };
+
+    loadCcalc();
+  }, [product]);
+
+  const parsePressure = (value: string) => {
+    const num = parseFloat(value.replace(',', '.'));
+    return Number.isFinite(num) ? num : null;
+  };
+
+  const parseLoad = (value: string) => {
+    const clean = value.replace(/\s+/g, '').replace(/,/g, '');
+    const num = parseFloat(clean);
+    return Number.isFinite(num) ? num : null;
+  };
+
+  const speeds = Array.from(new Set((ccalc?.cclist ?? []).map((i) => i.speed))).sort((a, b) =>
+    a.localeCompare(b, 'uk'),
+  );
+
+  const loadOptions = (ccalc?.cclist ?? [])
+    .filter((i) => i.speed === selectedSpeed)
+    .map((i) => i.load)
+    .filter((v, idx, arr) => arr.indexOf(v) === idx);
+
+  useEffect(() => {
+    if (!selectedSpeed) return;
+    const loads = loadOptions;
+    setSelectedLoad((prev) => (prev && loads.includes(prev) ? prev : loads[0] ?? ''));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedSpeed, ccalc]); // loadOptions depends on these
+
+  const recommendPressure = () => {
+    if (!selectedSpeed) return null;
+    const targetLoad = parseLoad(selectedLoad);
+    if (targetLoad === null || !ccalc?.cclist) return null;
+
+    const candidates = ccalc.cclist
+      .filter((i) => i.speed === selectedSpeed)
+      .map((i) => ({
+        pressureLabel: i.pressure,
+        pressureValue: parsePressure(i.pressure),
+        loadValue: parseLoad(i.load),
+      }))
+      .filter((i) => i.pressureValue !== null && i.loadValue !== null)
+      .sort((a, b) => (a.pressureValue! - b.pressureValue!));
+
+    const exact = candidates.find((i) => i.loadValue === targetLoad);
+    if (exact) return exact;
+
+    const notLess = candidates.find((i) => (i.loadValue ?? 0) >= targetLoad);
+    return notLess ?? candidates[candidates.length - 1] ?? null;
+  };
+
+  const recommended = recommendPressure();
 
   const formatPrice = (price: string) => {
     return parseFloat(price).toLocaleString('uk-UA');
@@ -269,6 +431,166 @@ export default function ProductPageBySlug() {
           </div>
         </div>
 
+        {brandUpper === 'TRELLEBORG' && (
+          <div className="mt-12">
+            <div className="rounded-2xl border border-foreground/10 bg-[#008e4ed3] text-black shadow-lg overflow-hidden">
+              <div className="px-4 sm:px-6 py-4 sm:py-5 border-b border-black/10">
+                <div className="flex items-center justify-between gap-3 flex-wrap">
+                  <h2 className="text-2xl font-semibold">Калькулятор тиску Trelleborg</h2>
+                  {ccalc?.PermittedRims && (
+                    <span className="text-sm text-black/80">
+                      Дозволені ободи: <strong className="text-black">{ccalc.PermittedRims}</strong>
+                    </span>
+                  )}
+                </div>
+                <p className="mt-2 text-sm text-black/80">
+                  Оберіть швидкість і навантаження — отримаєте мінімальний рекомендований тиск для цієї шини.
+                </p>
+              </div>
+
+              <div className="px-4 sm:px-6 py-5 sm:py-6 space-y-4">
+                {ccalcLoading && (
+                  <div className="flex items-center gap-2 text-sm text-black/80">
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>Завантаження калькулятора...</span>
+                  </div>
+                )}
+
+                {ccalcError && <p className="text-sm text-red-600">{ccalcError}</p>}
+
+                {ccalc?.cclist && ccalc.cclist.length > 0 && (
+                  <>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-black" htmlFor="speed-select">
+                          Швидкість
+                        </label>
+                        <select
+                          id="speed-select"
+                          value={selectedSpeed}
+                          onChange={(e) => setSelectedSpeed(e.target.value)}
+                          className="w-full rounded-lg border border-black/20 bg-white px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-black/20"
+                        >
+                          {speeds.map((s) => (
+                            <option key={s} value={s}>
+                              {s}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-black" htmlFor="load-select">
+                          Навантаження, кг
+                        </label>
+                        <select
+                          id="load-select"
+                          value={selectedLoad}
+                          onChange={(e) => setSelectedLoad(e.target.value)}
+                          className="w-full rounded-lg border border-black/20 bg-white px-3 py-2 text-sm text-black focus:outline-none focus:ring-2 focus:ring-black/20"
+                        >
+                          {loadOptions.map((load) => (
+                            <option key={load} value={load}>
+                              {parseLoad(load)?.toLocaleString('uk-UA') ?? load}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium text-black">Рекомендований тиск</label>
+                        <div className="rounded-lg border border-black/20 bg-white px-3 py-3 text-sm text-black min-h-[52px] flex items-center">
+                          {recommended ? (
+                            <div className="flex flex-col leading-tight">
+                              <span className="text-lg font-semibold">{recommended.pressureLabel}</span>
+                              <span className="text-xs text-black/70">
+                                Покриває {recommended.loadValue?.toLocaleString('uk-UA')} кг при {selectedSpeed}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-black/70 text-sm">Оберіть швидкість і навантаження</span>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1 text-xs text-black/75">
+                      <div>
+                        Дані за технічними таблицями Trelleborg для цього артикулу (SKU {product.sku}). Використовуйте тиск не нижчий від
+                        рекомендованого.
+                      </div>
+                      {(ccalc?.meta?.OD || ccalc?.meta?.RC || ccalc?.meta?.SRI || ccalc?.meta?.RimWidth || ccalc?.meta?.PermittedRims) && (
+                        <ul className="space-y-1">
+                          {ccalc?.meta?.OD && (
+                            <li>
+                              <span className="font-semibold text-black">OD:</span>{' '}
+                              <span className="text-black/80">Зовнішній діаметр накачаної, не навантаженої шини — {ccalc.meta.OD}</span>
+                            </li>
+                          )}
+                          {ccalc?.meta?.RC && (
+                            <li>
+                              <span className="font-semibold text-black">RC:</span>{' '}
+                              <span className="text-black/80">Довжина кочення шини — {ccalc.meta.RC}</span>
+                            </li>
+                          )}
+                          {ccalc?.meta?.SRI && (
+                            <li>
+                              <span className="font-semibold text-black">SRI:</span>{' '}
+                              <span className="text-black/80">Індекс радіусу швидкості — {ccalc.meta.SRI}</span>
+                            </li>
+                          )}
+                          {ccalc?.meta?.RimWidth && (
+                            <li>
+                              <span className="font-semibold text-black">Ширина обода:</span>{' '}
+                              <span className="text-black/80">Рекомендована ширина обода — {ccalc.meta.RimWidth}</span>
+                            </li>
+                          )}
+                          {ccalc?.meta?.PermittedRims && (
+                            <li>
+                              <span className="font-semibold text-black">Дозволені ободи:</span>{' '}
+                              <span className="text-black/80">{ccalc.meta.PermittedRims}</span>
+                            </li>
+                          )}
+                        </ul>
+                      )}
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {brandUpper === 'TRELLEBORG' && (
+          <div className="mt-10">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <h2 className="text-2xl font-semibold text-foreground">Технічна таблиця Trelleborg</h2>
+              <div className="text-sm text-foreground/60">
+                SKU: <span className="font-medium text-foreground">{product.sku}</span>
+              </div>
+            </div>
+
+            {trelleborgLoading && (
+              <div className="flex items-center gap-2 text-sm text-foreground/70 mb-3">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Завантаження таблиці...</span>
+              </div>
+            )}
+
+            {trelleborgError && (
+              <p className="text-sm text-red-600 mb-3">{trelleborgError}</p>
+            )}
+
+            {trelleborgHtml && (
+              <div className="rounded-xl border border-foreground/10 bg-white text-black shadow-sm">
+                <div className="overflow-x-auto">
+                  <div className="min-w-[720px] trelleborg-table-html" dangerouslySetInnerHTML={{ __html: trelleborgHtml }} />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {(product.description || product.specifications) && (
           <div className="mt-16">
             <div className="flex gap-2 border-b border-foreground/10 mb-6">
@@ -321,6 +643,26 @@ export default function ProductPageBySlug() {
           currentProductId={product.id} 
           size={product.size} 
         />
+
+        <style jsx>{`
+          .trelleborg-table-html table {
+            width: 100% !important;
+            max-width: 100%;
+            height: auto;
+          }
+          .trelleborg-table-html {
+            padding: 16px;
+          }
+          .trelleborg-table-html td,
+          .trelleborg-table-html th {
+            font-family: inherit;
+          }
+          @media (max-width: 640px) {
+            .trelleborg-table-html {
+              padding: 12px;
+            }
+          }
+        `}</style>
       </div>
     </div>
   );

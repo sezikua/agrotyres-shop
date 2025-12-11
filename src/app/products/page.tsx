@@ -283,10 +283,10 @@ export default function ProductsPage() {
               <>
                 {viewMode === 'grid' ? (
                   <div className="grid gap-6 grid-cols-2 lg:grid-cols-3">
-                    {sortedProducts.map((product) => (
-                      <ProductCard key={product.id} product={product} />
-                    ))}
-                  </div>
+                {sortedProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
                 ) : (
                   <div className="space-y-4">
                     {sortedProducts.map((product) => {

@@ -110,12 +110,12 @@ export default function SizePage() {
               <li itemProp="itemListElement" itemScope itemType="https://schema.org/ListItem" className="text-foreground">
                 <Link itemProp="item" href={sizeHref} aria-current="page" className="font-semibold">
                   <span itemProp="name">Розмір {sizeName}</span>
-                </Link>
+            </Link>
                 <meta itemProp="position" content="3" />
               </li>
             </ol>
           </nav>
-
+          
           <h1 className="text-3xl font-bold text-foreground mb-2">
             На сторінці представлені шини розміру {sizeName} для {categoriesListForDisplay}
           </h1>

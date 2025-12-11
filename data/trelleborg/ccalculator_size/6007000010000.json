@@ -1,0 +1,88 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "DW36B",
+    "cclist": [
+      {
+        "pressure": "1.0  bar",
+        "speed": "Field Service (*)",
+        "load": "6500"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "Up to 65 Km/h (*)",
+        "load": "6500"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "Field Service (*)",
+        "load": "7335"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "Up to 65 Km/h (*)",
+        "load": "7335"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "Field Service (*)",
+        "load": "9000"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "Up to 65 Km/h (*)",
+        "load": "9000"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "Field Service (*)",
+        "load": "10000"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "Up to 65 Km/h (*)",
+        "load": "10000"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "Field Service (*)",
+        "load": "10600"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "Up to 65 Km/h (*)",
+        "load": "10600"
+      },
+      {
+        "pressure": "2.8  bar",
+        "speed": "Field Service (*)",
+        "load": "11800"
+      },
+      {
+        "pressure": "2.8  bar",
+        "speed": "Up to 65 Km/h (*)",
+        "load": "11800"
+      },
+      {
+        "pressure": "3.2  bar",
+        "speed": "Field Service (*)",
+        "load": "12500"
+      },
+      {
+        "pressure": "3.2  bar",
+        "speed": "Up to 65 Km/h (*)",
+        "load": "12500"
+      },
+      {
+        "pressure": "3.6  bar",
+        "speed": "Field Service (*)",
+        "load": "13200"
+      },
+      {
+        "pressure": "3.6  bar",
+        "speed": "Up to 65 Km/h (*)",
+        "load": "13200"
+      }
+    ]
+  }
+}

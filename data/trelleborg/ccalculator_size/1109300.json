@@ -1,0 +1,118 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "",
+    "cclist": [
+      {
+        "pressure": "0.5 bar",
+        "speed": "10HT/30",
+        "load": "3070"
+      },
+      {
+        "pressure": "0.5 bar",
+        "speed": "10LT",
+        "load": "3910"
+      },
+      {
+        "pressure": "0.5 bar",
+        "speed": "25",
+        "load": "3185"
+      },
+      {
+        "pressure": "0.5 bar",
+        "speed": "40",
+        "load": "2870"
+      },
+      {
+        "pressure": "0.5 bar",
+        "speed": "50",
+        "load": "2630"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "10HT/30",
+        "load": "3905"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "10LT",
+        "load": "4850"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "25",
+        "load": "4050"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "40",
+        "load": "3650"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "50",
+        "load": "3350"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "10HT/30",
+        "load": "4430"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "10LT",
+        "load": "5475"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "25",
+        "load": "4595"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "40",
+        "load": "4140"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "50",
+        "load": "3745"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "10HT/30",
+        "load": "4950"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "10LT",
+        "load": "6055"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "25",
+        "load": "5135"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "40",
+        "load": "4625"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "50",
+        "load": "4125"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "10LT",
+        "load": "6655"
+      },
+      {
+        "pressure": "1.5 bar",
+        "speed": "10LT",
+        "load": "6940"
+      }
+    ]
+  }
+}

@@ -42,11 +42,11 @@ export default function ProductFilters({ onFiltersChange, onLoadingChange, curre
           setAllCategories([]);
           setAvailableCategories([]);
         }
-
+          
         setSizeFilterData(sizeData);
         const sortedDiameters = sortDiameterValues(Object.keys(sizeData));
-        setAllDiameters(sortedDiameters);
-        setAvailableDiameters(sortedDiameters);
+          setAllDiameters(sortedDiameters);
+          setAvailableDiameters(sortedDiameters);
       } catch (error) {
         console.error('Error loading filter options:', error);
         setAllCategories([]);
@@ -111,7 +111,7 @@ export default function ProductFilters({ onFiltersChange, onLoadingChange, curre
 
         const uniqueDiameters = [...new Set(products.map((p) => p.diameter).filter(Boolean))] as string[];
         const sortedDiameters = sortDiameterValues(uniqueDiameters);
-        setAvailableDiameters(sortedDiameters);
+          setAvailableDiameters(sortedDiameters);
         setAvailableCategories(allCategories);
 
         if (selectedDiameter) {

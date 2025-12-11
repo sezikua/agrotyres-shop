@@ -213,16 +213,16 @@ function CategoryCard({ category, isMobile = false }: { category: CategoryItem; 
                     </div>
                   </>
                 ) : (
-                  <video
-                    className="absolute inset-0 w-full h-full object-cover"
-                    src={category.video}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
+              <video
+                className="absolute inset-0 w-full h-full object-cover"
+                src={category.video}
+                autoPlay
+                muted
+                loop
+                playsInline
                     preload="metadata"
                     poster={category.image}
-                  />
+              />
                 )}
               </>
             )}

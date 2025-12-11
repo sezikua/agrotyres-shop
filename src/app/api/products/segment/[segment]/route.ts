@@ -51,16 +51,16 @@ export async function GET(
     const allProducts = (Array.isArray(data.data) ? data.data : []) as DirectusProduct[];
     
     allProducts.sort((a, b) => {
-      const aOrder = warehouseOrder[a.warehouse as keyof typeof warehouseOrder] || 4;
-      const bOrder = warehouseOrder[b.warehouse as keyof typeof warehouseOrder] || 4;
-      
-      if (aOrder !== bOrder) {
-        return aOrder - bOrder;
-      }
-      
-      // Якщо наявність однакова, сортуємо за назвою
+        const aOrder = warehouseOrder[a.warehouse as keyof typeof warehouseOrder] || 4;
+        const bOrder = warehouseOrder[b.warehouse as keyof typeof warehouseOrder] || 4;
+        
+        if (aOrder !== bOrder) {
+          return aOrder - bOrder;
+        }
+        
+        // Якщо наявність однакова, сортуємо за назвою
       return (a.product_name ?? '').localeCompare(b.product_name ?? '');
-    });
+      });
     
     // Тепер ділимо на сторінки після сортування
     const totalItems = allProducts.length;

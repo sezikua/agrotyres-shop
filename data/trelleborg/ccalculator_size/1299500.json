@@ -1,0 +1,368 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "W13L, W14L",
+    "cclist": [
+      {
+        "pressure": "1.0  bar",
+        "speed": "10 HT",
+        "load": "1705"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "10 road",
+        "load": "2550"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "30 road",
+        "load": "2075"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "40 road",
+        "load": "1940"
+      },
+      {
+        "pressure": "1.0  bar",
+        "speed": "50 road",
+        "load": "1775"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "10 HT",
+        "load": "1915"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "10 road",
+        "load": "2840"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "30 road",
+        "load": "2335"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "40 road",
+        "load": "2180"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "50 road",
+        "load": "2000"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "10 HT",
+        "load": "2120"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "10 road",
+        "load": "3130"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "30 road",
+        "load": "2585"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "40 road",
+        "load": "2415"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "50 road",
+        "load": "2215"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "10 HT",
+        "load": "2325"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "10 road",
+        "load": "3410"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "30 road",
+        "load": "2835"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "40 road",
+        "load": "2650"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "50 road",
+        "load": "2430"
+      },
+      {
+        "pressure": "1.7  bar",
+        "speed": "10 HT",
+        "load": "2385"
+      },
+      {
+        "pressure": "1.7  bar",
+        "speed": "10 road",
+        "load": "3550"
+      },
+      {
+        "pressure": "1.7  bar",
+        "speed": "30 road",
+        "load": "2910"
+      },
+      {
+        "pressure": "1.7  bar",
+        "speed": "40 road",
+        "load": "2720"
+      },
+      {
+        "pressure": "1.7  bar",
+        "speed": "50 road",
+        "load": "2490"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "10 HT",
+        "load": "2440"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "10 road",
+        "load": "3695"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "30 road",
+        "load": "2980"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "40 road",
+        "load": "2785"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "50 road",
+        "load": "2550"
+      },
+      {
+        "pressure": "1.9  bar",
+        "speed": "10 HT",
+        "load": "2495"
+      },
+      {
+        "pressure": "1.9  bar",
+        "speed": "10 road",
+        "load": "3835"
+      },
+      {
+        "pressure": "1.9  bar",
+        "speed": "30 road",
+        "load": "3040"
+      },
+      {
+        "pressure": "1.9  bar",
+        "speed": "40 road",
+        "load": "2845"
+      },
+      {
+        "pressure": "1.9  bar",
+        "speed": "50 road",
+        "load": "2600"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "10 HT",
+        "load": "2545"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "10 road",
+        "load": "3975"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "30 road",
+        "load": "3100"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "40 road",
+        "load": "2900"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "50 road",
+        "load": "2650"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "10 HT",
+        "load": "2590"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "10 road",
+        "load": "4045"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "30 road",
+        "load": "3155"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "40 road",
+        "load": "2950"
+      },
+      {
+        "pressure": "2.1  bar",
+        "speed": "50 road",
+        "load": "2695"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "10 HT",
+        "load": "2630"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "10 road",
+        "load": "4105"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "30 road",
+        "load": "3205"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "40 road",
+        "load": "2995"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "50 road",
+        "load": "2735"
+      },
+      {
+        "pressure": "2.3  bar",
+        "speed": "10 HT",
+        "load": "2665"
+      },
+      {
+        "pressure": "2.3  bar",
+        "speed": "10 road",
+        "load": "4245"
+      },
+      {
+        "pressure": "2.3  bar",
+        "speed": "30 road",
+        "load": "3250"
+      },
+      {
+        "pressure": "2.3  bar",
+        "speed": "40 road",
+        "load": "3035"
+      },
+      {
+        "pressure": "2.3  bar",
+        "speed": "50 road",
+        "load": "2770"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "10 HT",
+        "load": "2700"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "10 road",
+        "load": "4300"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "30 road",
+        "load": "3290"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "40 road",
+        "load": "3075"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "50 road",
+        "load": "2800"
+      },
+      {
+        "pressure": "2.5  bar",
+        "speed": "10 HT",
+        "load": "2765"
+      },
+      {
+        "pressure": "2.5  bar",
+        "speed": "10 road",
+        "load": "4345"
+      },
+      {
+        "pressure": "2.6  bar",
+        "speed": "10 HT",
+        "load": "2835"
+      },
+      {
+        "pressure": "2.6  bar",
+        "speed": "10 road",
+        "load": "4390"
+      },
+      {
+        "pressure": "2.7  bar",
+        "speed": "10 HT",
+        "load": "2900"
+      },
+      {
+        "pressure": "2.7  bar",
+        "speed": "10 road",
+        "load": "4430"
+      },
+      {
+        "pressure": "2.8  bar",
+        "speed": "10 HT",
+        "load": "2960"
+      },
+      {
+        "pressure": "2.8  bar",
+        "speed": "10 road",
+        "load": "4555"
+      },
+      {
+        "pressure": "2.9  bar",
+        "speed": "10 HT",
+        "load": "3025"
+      },
+      {
+        "pressure": "2.9  bar",
+        "speed": "10 road",
+        "load": "4585"
+      },
+      {
+        "pressure": "3.0  bar",
+        "speed": "10 HT",
+        "load": "3085"
+      },
+      {
+        "pressure": "3.0  bar",
+        "speed": "10 road",
+        "load": "4615"
+      }
+    ]
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "DW18L - TW18L - DW16L",
+    "cclist": [
+      {
+        "pressure": "0.4 bar",
+        "speed": "10 LT (*) - PFO",
+        "load": "2190"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "10 HT (**) - PFO",
+        "load": "2270"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "10 LT (*) - PFO",
+        "load": "2625"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "15 LT - PFO",
+        "load": "2455"
+      },
+      {
+        "pressure": "0.6 bar",
+        "speed": "20 S",
+        "load": "2185"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "10 HT (**) - PFO",
+        "load": "2675"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "10 LT (*) - PFO",
+        "load": "3095"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "15 LT - PFO",
+        "load": "2895"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "20 S",
+        "load": "2575"
+      },
+      {
+        "pressure": "0.8 bar",
+        "speed": "30 S",
+        "load": "2525"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "10 HT (**) - PFO",
+        "load": "3040"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "10 LT (*) - PFO",
+        "load": "3515"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "15 LT - PFO",
+        "load": "3290"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "20 S",
+        "load": "2925"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "30 S",
+        "load": "2870"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "40 to 65 S",
+        "load": "2815"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "70 S",
+        "load": "2560"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "10 HT (**) - PFO",
+        "load": "3400"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "10 LT (*) - PFO",
+        "load": "3940"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "15 LT - PFO",
+        "load": "3685"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "20 S",
+        "load": "3275"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "30 S",
+        "load": "3215"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "40 to 65 S",
+        "load": "3150"
+      },
+      {
+        "pressure": "1.2 bar",
+        "speed": "70 S",
+        "load": "2865"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "10 HT (**) - PFO",
+        "load": "3725"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "10 LT (*) - PFO",
+        "load": "4125"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "15 LT - PFO",
+        "load": "3940"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "20 S",
+        "load": "3590"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "30 S",
+        "load": "3520"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "40 to 65 S",
+        "load": "3450"
+      },
+      {
+        "pressure": "1.4 bar",
+        "speed": "70 S",
+        "load": "3140"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "10 HT (**) - PFO",
+        "load": "3825"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "10 LT (*) - PFO",
+        "load": "4125"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "15 LT - PFO",
+        "load": "3940"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "20 S",
+        "load": "3900"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "30 S",
+        "load": "3825"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "40 to 65 S",
+        "load": "3750"
+      },
+      {
+        "pressure": "1.6 bar",
+        "speed": "70 S",
+        "load": "3450"
+      }
+    ]
+  }
+}

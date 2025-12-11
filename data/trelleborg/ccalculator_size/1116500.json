@@ -1,0 +1,7 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "W11;W13; DW11; DW12; DW13",
+    "error": "Size not found"
+  }
+}

@@ -1,0 +1,248 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "W14L; W15L; W16L(°); DW14L; DW15L; DW16L(°)",
+    "cclist": [
+      {
+        "pressure": "0.6  bar",
+        "speed": "10 HT S",
+        "load": "1380"
+      },
+      {
+        "pressure": "0.6  bar",
+        "speed": "10 LT S",
+        "load": "1610"
+      },
+      {
+        "pressure": "0.6  bar",
+        "speed": "30 S",
+        "load": "1380"
+      },
+      {
+        "pressure": "0.6  bar",
+        "speed": "40 S",
+        "load": "1310"
+      },
+      {
+        "pressure": "0.6  bar",
+        "speed": "50 S",
+        "load": "1260"
+      },
+      {
+        "pressure": "0.6  bar",
+        "speed": "65 S",
+        "load": "1200"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "10 HT S",
+        "load": "1610"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "10 LT S",
+        "load": "1880"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "30 S",
+        "load": "1610"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "40 S",
+        "load": "1530"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "50 S",
+        "load": "1470"
+      },
+      {
+        "pressure": "0.8  bar",
+        "speed": "65 S",
+        "load": "1400"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "10 HT S",
+        "load": "1815"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "10 LT S",
+        "load": "2115"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "30 S",
+        "load": "1815"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "40 S",
+        "load": "1720"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "50 S",
+        "load": "1655"
+      },
+      {
+        "pressure": "1.0 bar",
+        "speed": "65 S",
+        "load": "1575"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "10 HT S",
+        "load": "2015"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "10 LT S",
+        "load": "2345"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "30 S",
+        "load": "2015"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "40 S",
+        "load": "1910"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "50 S",
+        "load": "1840"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "65 S",
+        "load": "1750"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "10 HT S",
+        "load": "2215"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "10 LT S",
+        "load": "2580"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "30 S",
+        "load": "2215"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "40 S",
+        "load": "2100"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "50 S",
+        "load": "2025"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "65 S",
+        "load": "1925"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "10 HT S",
+        "load": "2390"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "10 LT S",
+        "load": "2785"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "30 S",
+        "load": "2390"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "40 S",
+        "load": "2265"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "50 S",
+        "load": "2180"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "65 S",
+        "load": "2075"
+      },
+      {
+        "pressure": "2,4  bar",
+        "speed": "10 HT S",
+        "load": "2875"
+      },
+      {
+        "pressure": "2,4  bar",
+        "speed": "10 LT S",
+        "load": "3350"
+      },
+      {
+        "pressure": "2,4  bar",
+        "speed": "30 S",
+        "load": "2875"
+      },
+      {
+        "pressure": "2,4  bar",
+        "speed": "40 S",
+        "load": "2725"
+      },
+      {
+        "pressure": "2,4  bar",
+        "speed": "50 S",
+        "load": "2625"
+      },
+      {
+        "pressure": "2,4  bar",
+        "speed": "65 S",
+        "load": "2500"
+      },
+      {
+        "pressure": "2.0 bar",
+        "speed": "10 HT S",
+        "load": "2645"
+      },
+      {
+        "pressure": "2.0 bar",
+        "speed": "10 LT S",
+        "load": "3085"
+      },
+      {
+        "pressure": "2.0 bar",
+        "speed": "30 S",
+        "load": "2645"
+      },
+      {
+        "pressure": "2.0 bar",
+        "speed": "40 S",
+        "load": "2510"
+      },
+      {
+        "pressure": "2.0 bar",
+        "speed": "50 S",
+        "load": "2415"
+      },
+      {
+        "pressure": "2.0 bar",
+        "speed": "65 S",
+        "load": "2300"
+      }
+    ]
+  }
+}

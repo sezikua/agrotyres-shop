@@ -1,0 +1,98 @@
+{
+  "success": 1,
+  "ccalculator_size": {
+    "PermittedRims": "",
+    "cclist": [
+      {
+        "pressure": "1.2  bar",
+        "speed": "15 Cyc (*)",
+        "load": "5535"
+      },
+      {
+        "pressure": "1.2  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "4160"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "15 Cyc (*)",
+        "load": "6140"
+      },
+      {
+        "pressure": "1.4  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "4615"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "15 Cyc (*)",
+        "load": "6745"
+      },
+      {
+        "pressure": "1.6  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "5070"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "15 Cyc (*)",
+        "load": "7090"
+      },
+      {
+        "pressure": "1.8  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "5330"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "15 Cyc (*)",
+        "load": "7435"
+      },
+      {
+        "pressure": "2.0  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "5590"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "15 Cyc (*)",
+        "load": "7655"
+      },
+      {
+        "pressure": "2.2  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "5755"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "15 Cyc (*)",
+        "load": "7870"
+      },
+      {
+        "pressure": "2.4  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "5915"
+      },
+      {
+        "pressure": "2.6  bar",
+        "speed": "15 Cyc (*)",
+        "load": "8260"
+      },
+      {
+        "pressure": "2.6  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "6210"
+      },
+      {
+        "pressure": "2.8  bar",
+        "speed": "15 Cyc (*)",
+        "load": "8645"
+      },
+      {
+        "pressure": "2.8  bar",
+        "speed": "Up to 40 Km/h (*)",
+        "load": "6500"
+      }
+    ]
+  }
+}
